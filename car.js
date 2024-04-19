@@ -16,6 +16,7 @@ class Car{
 	}
 
 	update(){
+		// voir box2D.js pour une autre physique
 		if(this.controls.forward){
 			this.speed += this.acceleration;
 		}
