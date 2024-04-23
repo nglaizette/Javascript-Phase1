@@ -23,4 +23,25 @@ class Level{
 			level.biases[i]=Math.random()*2-1;
 		}
 	}
+
+	static feedForward(givenInput, level) {
+		for(let i=0; i<level.inputs.length; i++){
+			level.inputs[i] = givenInput[i];
+		}
+
+		for(let j= 0; j<level.outputs.length; j++){
+			let sum;
+			for(let i=0; i<level.inputs.length; i++){
+				sum += level.weight[i][j] * level.input[i];
+			}
+
+			if(sum>level.biases[i]){
+				level.outputs[i] = 1;
+			} else {
+				level.outputs[i] = 0;
+			}
+		}
+
+		return level.outputs;
+	}
 }
