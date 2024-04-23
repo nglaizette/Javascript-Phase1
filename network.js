@@ -11,7 +11,7 @@ class NeuralNetwork{
 
 	static feedForward(givenInputs, network){
 		let outputs = Level.feedForward(
-			givenInputs, network.level[0]
+			givenInputs, network.levels[0]
 		);
 
 		for(let i=1; i<network.levels.length; i++){
@@ -56,15 +56,15 @@ class Level{
 		}
 
 		for(let j= 0; j<level.outputs.length; j++){
-			let sum;
+			let sum =0;
 			for(let i=0; i<level.inputs.length; i++){
-				sum += level.weight[i][j] * level.input[i];
+				sum += level.weights[i][j] * level.inputs[i];
 			}
 
-			if(sum>level.biases[i]){
-				level.outputs[i] = 1;
+			if(sum>level.biases[j]){
+				level.outputs[j] = 1;
 			} else {
-				level.outputs[i] = 0;
+				level.outputs[j] = 0;
 			}
 		}
 
