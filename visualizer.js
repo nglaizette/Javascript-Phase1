@@ -17,7 +17,7 @@ class Visualizer {
 		const right = left+width;
 		const bottom = top+height;
 
-		const {inputs, outputs, weights} = level;
+		const {inputs, outputs, weights, biases} = level;
 
 		for(let i=0; i<inputs.length; i++){
 			for(let j=0; j<outputs.length; j++){
@@ -31,12 +31,7 @@ class Visualizer {
 					top
 				);
 				ctx.lineWidth=2;
-				const value = weights[i][j];
-				const alpha = Math.abs(value);
-				const R=value<0 ? 0:255;
-				const G=R;
-				const B=value>0 ? 0:255;
-				ctx.strokeStyle="rgba("+R+","+G+","+B+","+alpha+")";
+				ctx.strokeStyle=getRGBA(weights[i][j]);
 				ctx.stroke();
 			}
 		}
@@ -45,7 +40,11 @@ class Visualizer {
 		for(let i=0; i<inputs.length; i++){
 			const x=Visualizer.#getNodeX(inputs, i, left, right);
 			ctx.beginPath();
-			ctx.arc(x, bottom, nodeRadius, 0, Math.PI*2.0);
+			ctx.arc(x, bottom, nodeRadius * 0.6, 0, Math.PI*2.0);
+			ctx.fillStyle="black";
+			ctx.fill();
+			ctx.beginPath();
+			ctx.arc(x, bottom, nodeRadius * 0.6, 0, Math.PI*2.0);
 			ctx.fillStyle="white";
 			ctx.fill();
 		}
@@ -54,8 +53,18 @@ class Visualizer {
 			const x=Visualizer.#getNodeX(outputs, i, left, right);
 			ctx.beginPath();
 			ctx.arc(x, top, nodeRadius, 0, Math.PI*2.0);
+			ctx.fillStyle="black";
+			ctx.fill();
+			ctx.beginPath();
+			ctx.arc(x, top, nodeRadius * 0.6, 0, Math.PI*2.0);
 			ctx.fillStyle="white";
 			ctx.fill();
+
+			ctx.beginPath();
+			ctx.lineWidth=2;
+			ctx.arc(x, top, nodeRadius, 0, Math.PI*2);
+			ctx.strokeStyle = getRGBA(biases[i]);
+			ctx.stroke();
 		}
 	}
 
