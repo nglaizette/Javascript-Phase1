@@ -15,11 +15,13 @@ class Visualizer {
 					0,
 					network.levels.length == 1 ? 0.5 : i /(network.levels.length-1)
 				)
-			Visualizer.drawLevel(ctx, network.levels[i], left, levelTop, width, levelHeight);
+			ctx.setLineDash([7, 3]);
+			Visualizer.drawLevel(ctx, network.levels[i], left, levelTop, width, levelHeight, 
+				i==network.levels.length-1 ? ['⬆️','⬅️', '➡️', '⬇️'] : []);
 		}
 	}
 
-	static drawLevel(ctx,level, left, top, width, height){
+	static drawLevel(ctx,level, left, top, width, height, outputlabels){
 		const right = left+width;
 		const bottom = top+height;
 
@@ -73,6 +75,18 @@ class Visualizer {
 			ctx.setLineDash([3, 3]);
 			ctx.stroke();
 			ctx.setLineDash([]);
+
+			if(outputlabels[i]){
+				ctx.beginPath();
+				ctx.textAlign="center";
+				ctx.textBaseline="middle";
+				ctx.fillStyle="black";
+				ctx.strokeStyle="white";
+				ctx.font=(nodeRadius*1.5)+"px Arial";
+				ctx.fillText(outputlabels[i], x, top);
+				ctx.lineWidth=0.5;
+				ctx.fillText(outputlabels[i], x, top);
+			}
 		}
 	}
 
