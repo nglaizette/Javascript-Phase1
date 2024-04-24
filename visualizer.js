@@ -43,5 +43,30 @@ class Visualizer {
 			ctx.fillStyle="white";
 			ctx.fill();
 		}
+
+		for(let i=0; i<inputs.length; i++){
+			for(let j=0; j<outputs.length; j++){
+				ctx.beginPath();
+				ctx.moveTo(
+					Visualizer.#getNodeX(inputs, i, left, right),
+					bottom
+				);
+				ctx.lineTo(
+					Visualizer.#getNodeX(outputs, j,left, right),
+					top
+				);
+				ctx.lineWidth=2;
+				ctx.strokeStyle="orange";
+				ctx.stroke();
+			}
+		}
+	}
+
+	static #getNodeX(nodes, index, left,right){
+		return lerp(
+			left,
+			right,
+			nodes.length==1 ? 0.5: index/(nodes.length-1)
+		);
 	}
 }
