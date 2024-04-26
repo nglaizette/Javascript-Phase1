@@ -23,6 +23,9 @@ class Car{
 
 		}
 		this.controls = new Controls(controlType);
+
+		this.img = new Image();
+		this.img.src = "car.png";
 	}
 
 	update(roadBorders, traffic) {
@@ -135,17 +138,15 @@ class Car{
 	}
 
 	draw(ctx, color, drawSensor=false){
-		if(this.damaged){
-			ctx.fillStyle="gray";
-		} else {
-			ctx.fillStyle=color;
-		}
-		ctx.beginPath();
-		ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
-		for(let i = 1; i < this.polygon.length; i++){
-			ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
-		}
-		ctx.fill();
+
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.drawImage(this.img,
+			-this.width/2.0,
+			-this.height/2.0,
+			this.width,
+			this.height);
+		ctx.restore();
 
 		if(this.sensor && drawSensor){
 			this.sensor.draw(ctx);
